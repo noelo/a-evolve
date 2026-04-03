@@ -14,8 +14,6 @@ import asyncio
 import logging
 import os
 import time
-from typing import Optional
-
 from ...agents.mcp.key_registry import KeyRegistry
 from ...agents.mcp.task_filter import filter_tasks_by_keys
 from ...types import Feedback, Task, Trajectory
@@ -74,7 +72,6 @@ class McpAtlasBenchmark(BenchmarkAdapter):
         self.use_litellm = use_litellm
         self.concurrency = concurrency
         self._bedrock_client = None
-        self._semaphore: Optional[asyncio.Semaphore] = None
 
         if self.use_litellm:
             logger.info(f"Using LiteLLM with model: {self.eval_model_id} (official method)")
@@ -176,11 +173,14 @@ class McpAtlasBenchmark(BenchmarkAdapter):
             )
 
         # Evaluate all claims concurrently (official method)
-        if self._semaphore is None:
-            self._semaphore = asyncio.Semaphore(self.concurrency)
+        # Create a fresh semaphore per call — a shared instance breaks when
+        # evaluate() is called from different threads (each with its own
+        # event loop), because asyncio.Semaphore is bound to the loop that
+        # was running when it was created.
+        semaphore = asyncio.Semaphore(self.concurrency)
 
         async def eval_with_semaphore(claim: str) -> dict:
-            async with self._semaphore:
+            async with semaphore:
                 return await self._judge_single_claim_async(claim, actual)
 
         tasks = [eval_with_semaphore(claim) for claim in claims]

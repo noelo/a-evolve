@@ -59,6 +59,7 @@ _SEED_REGISTRY: dict[str, str] = {
     "terminal": "terminal",
     "terminal2": "terminal",
     "terminal-bench": "terminal",
+    "mcp-mh": "mcp_mh",
 }
 
 

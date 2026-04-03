@@ -159,6 +159,17 @@ class AgentWorkspace:
                         all_memories.append(entry)
         return all_memories[-limit:]
 
+    # ── Harness (optional scaffolding code, mutated by MetaHarness) ──
+
+    def read_harness(self) -> str | None:
+        """Read harness.py from the workspace root, or None if absent."""
+        path = self.root / "harness.py"
+        return path.read_text() if path.exists() else None
+
+    def write_harness(self, content: str) -> None:
+        """Write harness.py to the workspace root."""
+        (self.root / "harness.py").write_text(content)
+
     # ── Evolution metadata (read-only for agents, managed by engine) ─
 
     def read_evolution_history(self) -> list[dict[str, Any]]:
