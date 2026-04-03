@@ -3,7 +3,7 @@
 ## Overview
 
 This report presents results of applying the Meta-Harness algorithm
-(Lee et al., 2026, arXiv:2603.28052) to the MCP-Atlas benchmark, using
+(Lee et al., 2026, [arXiv:2603.28052](https://arxiv.org/pdf/2603.28052)) to the MCP-Atlas benchmark, using
 the A-Evolve framework. Meta-Harness evolves an AI agent's harness
 (system prompt, skills, scaffolding code) over multiple cycles, with
 Claude Code CLI as the proposer.
@@ -72,6 +72,26 @@ Total evolution wall time: 3.5 hours.
 | Avg Score (5-trial mean) | 0.789 | 0.834 | **+0.045** |
 | Std Dev (pass rate) | 4.5% | 3.8% | -0.7% |
 | Avg solve time per trial | 727s | 257s | **2.8x faster** |
+
+## Note on Overfitting Prevention
+
+As [Lee et al. (2026, §4.3)](https://arxiv.org/pdf/2603.28052) note,
+overfitting is an inherent challenge in harness evolution: *"We additionally
+check for overfitting by manual inspection and regex-based audits for
+task-specific string leakage into evolved harnesses."*
+
+Following the paper's recommendation, our engine includes a **regex-based
+audit** (`_audit_leakage` in `engine.py`) that scans evolved workspace files
+for hardcoded task IDs before accepting a candidate. Upon manual inspection
+of the evolved artifact, we observed that the proposer occasionally embedded
+task-derived factual hints (e.g., a specific date) into the harness routing
+logic in `harness.py`. While the majority of the evolved harness consists
+of genuinely general-purpose improvements (tool routing, budget management,
+chain-task planning), these few instances highlight that **regex-based audits
+alone are not sufficient to catch all forms of semantic leakage** — manual
+review remains an important complementary step, consistent with the paper's
+methodology. Automated semantic leakage detection (e.g., LLM-based auditing)
+is a promising direction for future work.
 
 ## Artifact
 
