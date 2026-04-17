@@ -231,7 +231,7 @@ A-Evolve ships with ready-to-use benchmark adapters and seed workspaces:
 | [`mcp-atlas`](docs/mcp-atlas-demo.md) | Tool-calling via MCP (16+ servers) | `seed_workspaces/mcp/` | **79.4%** (🥇 #1) |
 | [`terminal-bench`](docs/terminal-bench-demo.md) | Terminal/CLI ops in Docker | `seed_workspaces/terminal/` | **76.5%** (~#7) |
 | [`skill-bench`](docs/skillbench-setup.md) | Agentic skill discovery | `seed_workspaces/skillbench/` | **34.9%** (~#2)|
-| [`cl-bench`](examples/cl_bench_examples/) | Continual-learning rubric evaluation | — | WIP |
+| [`cl-bench`](examples/cl_bench_examples/) | Continual-learning rubric evaluation | — | **38.0%** |
 
 ### Pluggability: Bring Your Own Everything
 
