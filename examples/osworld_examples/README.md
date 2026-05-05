@@ -11,7 +11,7 @@ Run the A-EVOLVE propose+curator evolution loop on [OSWorld](https://github.com/
 
 ## Setup
 
-### 1. Clone OSWorld
+### 1. Install OSWorld
 
 ```bash
 git clone https://github.com/xlang-ai/OSWorld
@@ -19,35 +19,60 @@ cd OSWorld
 pip install -e .
 ```
 
+Task data (`evaluation_examples/test_all.json`, 369 tasks across 10 domains) is included in the OSWorld repo.
+
+For pre-downloaded cache files (used during task setup), download from [Google Drive](https://drive.google.com/file/d/1XlEy49otYDyBlA3O9NbR0BpPfr2TXgaD/view?usp=drive_link) and extract to `OSWorld/cache/`.
+
 ### 2. AWS Configuration
 
-OSWorld VMs run on EC2 instances. You need:
-- An AWS account with EC2 access
-- A VPC subnet with internet access
-- A security group allowing inbound ports: 5000 (server), 9222 (Chrome CDP), 5900 (VNC)
+OSWorld uses a Host-Client architecture: your host machine manages EC2 instances, each running an Ubuntu desktop as the task environment.
+
+#### 2.1 AWS Credentials
+
+```bash
+aws configure
+# Enter: AWS Access Key ID, Secret Access Key, Region (us-east-1)
+```
+
+#### 2.2 Security Group
+
+Create a security group with the following **inbound rules**:
+
+| Type | Protocol | Port | Source | Purpose |
+|------|----------|------|--------|---------|
+| SSH | TCP | 22 | 0.0.0.0/0 | SSH access |
+| Custom TCP | TCP | 5000 | 172.31.0.0/16 | OSWorld backend service |
+| Custom TCP | TCP | 5910 | 0.0.0.0/0 | NoVNC visualization |
+| Custom TCP | TCP | 8006 | 172.31.0.0/16 | VNC service |
+| Custom TCP | TCP | 8080 | 172.31.0.0/16 | VLC service |
+| Custom TCP | TCP | 9222 | 172.31.0.0/16 | Chrome CDP |
+
+Outbound: Allow all traffic.
+
+#### 2.3 VPC and Subnet
+
+The host machine and all OSWorld VMs must reside in the same VPC subnet. Use the subnet of your host instance (visible in EC2 console → Instance → Networking).
+
+#### 2.4 Environment Variables
+
+Create a `.env` file in the OSWorld directory or export directly:
 
 ```bash
 export OSWORLD_PATH=/path/to/OSWorld
 export AWS_REGION=us-east-1
-export AWS_SUBNET_ID=subnet-xxxxx
-export AWS_SECURITY_GROUP_ID=sg-xxxxx
+export AWS_SUBNET_ID=subnet-xxxxxxxxx
+export AWS_SECURITY_GROUP_ID=sg-xxxxxxxxx
 export ANTHROPIC_API_KEY=sk-ant-xxxxx
 ```
 
-### 3. AMI Selection
+The AMI `ami-0d23263edb96951d8` (us-east-1) is the official OSWorld VM image and is used by default.
 
-| Region | AMI | Chrome | Notes |
-|--------|-----|--------|-------|
-| us-east-1 | `ami-0d23263edb96951d8` | < 147 | Stable, recommended |
-| us-west-2 | `ami-083ebc5e7cee75c51` | 147 | Requires `--user-data-dir` fix |
+### 3. Install a-evolve
 
-The `us-east-1` AMI is the default OSWorld AMI and is recommended for reproducibility.
-
-### 4. Chrome 147 Fix (us-west-2 AMI only)
-
-Chrome 147+ requires a non-default `--user-data-dir` for `--remote-debugging-port` to work. The fix is already applied in `OSWorld/desktop_env/controllers/setup.py` — it automatically copies the Chrome profile to `/tmp/chrome-debug-profile` and adds the flag when launching Chrome with remote debugging.
-
-If using the us-west-2 AMI, ensure this patch is applied to your OSWorld installation.
+```bash
+cd /path/to/a-evolve
+pip install -e ".[osworld]"
+```
 
 ## Running
 
