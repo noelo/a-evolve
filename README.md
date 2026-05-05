@@ -62,6 +62,37 @@ By applying our open-source **reference evolution algorithms** to a base Claude 
 <sub>Baseline → <strong>34.9%</strong> (+15.2pp)</sub>
 </td>
 </tr>
+    <tr>
+<td align="center" width="23%">
+<h3>🟢 ARC-AGI </h3>
+<img src="https://img.shields.io/badge/12.23%25-10b981?style=for-the-badge&labelColor=065f46" />
+<br/><br/>
+<strong>🥇 #2 Community LeaderBoard </strong><br/>
+<sub>Baseline → <strong>12.3% </strong> (+2.2pp)</sub>
+</td>
+<td align="center" width="23%">
+<h3>🔵 OSWorld </h3>
+<img src="https://img.shields.io/badge/69.6%25-2563eb?style=for-the-badge&labelColor=1e3a5f" />
+<br/><br/>
+<strong> -- </strong><br/>
+<sub>Baseline → <strong>69.6%</strong> (+3.9pp)</sub>
+</td>
+<td align="center" width="23%">
+<h3>🟣 CL Bench </h3>
+<img src="https://img.shields.io/badge/X%25-7c3aed?style=for-the-badge&labelColor=3b1d6e" />
+<br/><br/>
+<strong> To Be Announced  </strong><br/>
+<sub>To Be Announced  </sub>
+</td>
+<td align="center" width="23%">
+<h3>🟡 WebArena-infinity </h3>
+<img src="https://img.shields.io/badge/X%25-d97706?style=for-the-badge&labelColor=78350f" />
+<br/><br/>
+<strong> To Be Announced  </strong><br/>
+<sub>To Be Announced </sub>
+</td>
+</tr>
+</table>
 </table>
 
 ![A-Evolve Benchmarks](figs/a_evolve_benchmarks.png)
@@ -69,6 +100,7 @@ By applying our open-source **reference evolution algorithms** to a base Claude 
 > *All results achieved with a single Claude Opus-4.6 base model, evolved using A-Evolve's sample algorithms. 0 hours of human harness engineering. Data checked March 2026.*
 
 ### News
+- **05/04** **New Benchmark Results**, A-Evolve added [results](https://x.com/HenryL_AI/status/2051711038618480816?s=20) on ARC-AGI-3, evolving a multi-agent system to be more powerful on solving difficult tasks like [ARC-AGI-3](https://arcprize.org/arc-agi/3). Improving performance from 10% to 12%.
 - **04/20** **New Algorithm Drop**, A-Evolve added new evolutionary algorithm [GEPA](https://x.com/HenryL_AI/status/2046326722912739713?s=20), submitted by the [GEPA](https://gepa-ai.github.io/gepa/blog/) team.
 - **04/10** **Integration**, A-Evolve is officially integrated into [Orch-Research Skills Library](https://x.com/HenryL_AI/status/2042688465855488476), along with others including AutoResearch, OpenRLHF, DeepSpeed, SGLang
 - **04/07** **New Agent Drop**, We added recently leaked public ClawCode (Claude Code), took the evolution harness + skills we learned on Terminal-Bench 2.0 (TB2) and directly transplanted them onto the ClawCode. [Result](https://x.com/HenryL_AI/status/2041621538580132280) on TB2: baseline **67.8%** → **72.9%** (+5.1pp uplift)
