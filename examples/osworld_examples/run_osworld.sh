@@ -13,10 +13,9 @@ set -euo pipefail
 #   2. Set OSWORLD_PATH to the cloned directory
 #   3. Configure AWS credentials and set the env vars below
 #   4. Install: pip install -e . (from a-evolve root)
-#   5. For Chrome 147+ AMIs, apply the --user-data-dir fix (see README)
+#   5. Install: pip install -e ".[osworld]" (from a-evolve root)
 
 # ── AWS Configuration ─────────────────────────────────────────────────
-# Default: us-east-1 AMI (stable, Chrome < 147)
 export OSWORLD_PATH="${OSWORLD_PATH:-/path/to/OSWorld}"
 export AWS_REGION="${AWS_REGION:-us-east-1}"
 export AWS_SUBNET_ID="${AWS_SUBNET_ID:?Set AWS_SUBNET_ID}"

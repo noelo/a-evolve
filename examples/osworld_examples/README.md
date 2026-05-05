@@ -122,6 +122,15 @@ python examples/osworld_examples/evolve_osworld.py \
     --output-dir outputs/osworld_evolve
 ```
 
+## Results
+
+| Configuration | Tasks | Pass Rate |
+|---------------|-------|-----------|
+| Baseline (no skills, no evolution) | 369 | 65.6% |
+| **A-EVOLVE (propose+curator)** | 369 | **68.3%** |
+
++2.7% absolute improvement. The evolve run uses `--no-seed-skills --shuffle --shuffle-seed 42 --max-steps 100` with Opus as solver/curator/selector, batch-size 16.
+
 ## Cost Estimate
 
 - Each task uses one `t3.xlarge` EC2 instance (~$0.17/hr)
