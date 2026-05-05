@@ -62,8 +62,9 @@ export OSWORLD_PATH=/path/to/OSWorld
 export AWS_REGION=us-east-1
 export AWS_SUBNET_ID=subnet-xxxxxxxxx
 export AWS_SECURITY_GROUP_ID=sg-xxxxxxxxx
-export ANTHROPIC_API_KEY=sk-ant-xxxxx
 ```
+
+AWS credentials must have Bedrock access with Claude models enabled (us-east-1 or us-west-2). Configure via `aws configure` or environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`).
 
 The AMI `ami-0d23263edb96951d8` (us-east-1) is the official OSWorld VM image and is used by default.
 
